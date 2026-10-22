@@ -92,7 +92,7 @@ Set the Vercel project root directory to `AI_Diet_Planner` if deploying from the
 - `DB_ENGINE`: `django.db.backends.mysql`.
 - `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, and `DB_PORT`: credentials for a MySQL database reachable from Vercel.
 
-The Vercel entry point is `api/index.py`. The application uses PyMySQL so deployment does not need native MySQL build tools. Vercel's temporary filesystem is not a persistent database, so configure an external MySQL service rather than SQLite or a local database file.
+Vercel detects the Django application from `manage.py` and its WSGI settings, and collects the configured static files during deployment. The application uses PyMySQL so deployment does not need native MySQL build tools. Vercel's temporary filesystem is not a persistent database, so configure an external MySQL service rather than SQLite or a local database file.
 
 ## Notes
 
