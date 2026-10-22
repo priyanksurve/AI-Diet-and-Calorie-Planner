@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate your targets | AI Diet Planner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="app-page calculator-page">
+    <nav class="navbar navbar-expand-lg app-navbar">
+        <div class="container">
+            <a class="app-brand" href="{% url 'home' %}">
+                <span class="app-brand-icon" aria-hidden="true">❧</span>
+                <span>Wellness <strong>Kitchen</strong></span>
+            </a>
+            <div class="d-flex align-items-center gap-2 app-nav-actions">
+                <span class="app-greeting d-none d-sm-inline">Hi, {{ user.username }}</span>
+                <a href="{% url 'home' %}" class="app-nav-link">Home</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="app-nav-link">Log out</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5" id="calculator">
+        <div class="app-page-heading text-center mb-5">
+            <span class="app-page-eyebrow"><i></i> PERSONALIZED ESTIMATE</span>
+            <h1 class="fw-bold">Calculate your daily targets</h1>
+            <p class="text-secondary">Enter your details to estimate your calories and build your meal plan.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="calculator-card app-form-card">
+                    <div class="app-form-intro">
+                        <span class="app-form-step">YOUR PROFILE</span>
+                        <h2 class="h4">A few details about you</h2>
+                        <p>We’ll use these to estimate your daily calorie and nutrition targets.</p>
+                    </div>
+                    <form method="post" action="{% url 'calculator' %}" novalidate>
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+                        {% endif %}
+                        <div class="row g-3">
+                            {% for field in form %}
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.help_text %}
+                                <div class="form-text">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% if field.errors %}
+                                <div class="invalid-feedback d-block">{{ field.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="btn btn-success btn-lg w-100 mt-4">
+                            Calculate targets &amp; create my 7-day plan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p class="small text-secondary text-center mt-4">
+            Estimates are for adults and are not medical advice. Consult a qualified professional for individual guidance.
+        </p>
+    </main>
+</body>
+
+</html>

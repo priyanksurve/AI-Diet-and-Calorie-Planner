@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Diet Planner | Personalized meal plans</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="landing-page">
+    <nav class="landing-nav">
+        <div class="landing-nav-inner">
+            <a class="landing-brand" href="{% url 'home' %}">
+                <span class="landing-brand-icon" aria-hidden="true">❧</span>
+                <span>Wellness <strong>Kitchen</strong></span>
+            </a>
+            <div class="landing-nav-actions">
+                {% if user.is_authenticated %}
+                <span class="landing-greeting">Hi, {{ user.username }}</span>
+                <a href="{% url 'calculator' %}" class="landing-nav-link">Open planner</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="landing-nav-button">Log out</button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" class="landing-nav-link">Log in</a>
+                <a href="{% url 'register' %}" class="landing-nav-button">Create account <span aria-hidden="true">↗</span></a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="landing-hero">
+            <div class="landing-leaf landing-leaf-one" aria-hidden="true"></div>
+            <div class="landing-leaf landing-leaf-two" aria-hidden="true"></div>
+            <div class="landing-hero-inner">
+                <div class="landing-copy">
+                    <p class="landing-eyebrow"><span></span> YOUR EVERYDAY WELLNESS COMPANION</p>
+                    <h1>AI Diet<br><span>Planner</span></h1>
+                    <p class="landing-subtitle">Personalized 7-Day Meal Plans</p>
+                    <p class="landing-description">
+                        Eat well in a way that works for you. Get calorie and nutrition targets,
+                        then discover a week of meal ideas shaped around your goals and food preferences.
+                    </p>
+
+                    <div class="landing-benefits" aria-label="Planner benefits">
+                        <div class="landing-benefit">
+                            <span class="benefit-icon" aria-hidden="true">◎</span>
+                            <span>Your<br>Goals</span>
+                        </div>
+                        <div class="landing-benefit">
+                            <span class="benefit-icon" aria-hidden="true">♧</span>
+                            <span>Balanced<br>Nutrition</span>
+                        </div>
+                        <div class="landing-benefit">
+                            <span class="benefit-icon" aria-hidden="true">♡</span>
+                            <span>Healthier<br>Habits</span>
+                        </div>
+                        <div class="landing-benefit">
+                            <span class="benefit-icon" aria-hidden="true">↗</span>
+                            <span>Steady<br>Progress</span>
+                        </div>
+                    </div>
+
+                    <div class="landing-cta">
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'calculator' %}" class="landing-primary-cta">
+                            Calculate my targets <span aria-hidden="true">↗</span>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'register' %}" class="landing-primary-cta">
+                            Get started <span aria-hidden="true">↗</span>
+                        </a>
+                        <a href="{% url 'login' %}" class="landing-secondary-cta">I already have an account</a>
+                        {% endif %}
+                    </div>
+                    <p class="landing-note">A practical starting point for your healthy routine.</p>
+                </div>
+
+                <div class="landing-showcase" aria-label="Sample weekly meal plan preview">
+                    <div class="showcase-decoration" aria-hidden="true"></div>
+                    <div class="showcase-photo">
+                        <img src="{% static 'images/healthy-choices-happy-progress.png' %}"
+                            alt="A woman exploring healthy meals with her nutrition app">
+                    </div>
+                    <div class="meal-phone">
+                        <div class="phone-speaker" aria-hidden="true"></div>
+                        <div class="phone-header">
+                            <div>
+                                <span class="phone-overline">YOUR WEEK, WELL PLANNED</span>
+                                <h2>Meal Plan <span>✳</span></h2>
+                            </div>
+                            <span class="days-pill">7 Days⌄</span>
+                        </div>
+                        <div class="week-strip" aria-label="Monday through Sunday">
+                            <span class="week-day active">Mon<strong>1</strong></span>
+                            <span class="week-day">Tue<strong>2</strong></span>
+                            <span class="week-day">Wed<strong>3</strong></span>
+                            <span class="week-day">Thu<strong>4</strong></span>
+                            <span class="week-day">Fri<strong>5</strong></span>
+                            <span class="week-day">Sat<strong>6</strong></span>
+                            <span class="week-day">Sun<strong>7</strong></span>
+                        </div>
+                        <div class="phone-day-title">
+                            <strong>Today’s meal ideas</strong>
+                            <span>Day 1 of 7</span>
+                        </div>
+                        <article class="phone-meal">
+                            <span class="phone-meal-icon breakfast-icon" aria-hidden="true">☀</span>
+                            <div class="phone-meal-copy">
+                                <span class="phone-meal-type">BREAKFAST</span>
+                                <strong>Oats &amp; fresh fruit</strong>
+                                <small>Start your morning with something nourishing</small>
+                                <span class="phone-nutrition">Balanced · Protein · Fibre</span>
+                            </div>
+                            <span class="phone-meal-arrow" aria-hidden="true">›</span>
+                        </article>
+                        <article class="phone-meal">
+                            <span class="phone-meal-icon lunch-icon" aria-hidden="true">✿</span>
+                            <div class="phone-meal-copy">
+                                <span class="phone-meal-type">LUNCH</span>
+                                <strong>A wholesome grain bowl</strong>
+                                <small>Colorful ingredients, selected for you</small>
+                                <span class="phone-nutrition">Fresh · Filling · Flexible</span>
+                            </div>
+                            <span class="phone-meal-arrow" aria-hidden="true">›</span>
+                        </article>
+                        <article class="phone-meal">
+                            <span class="phone-meal-icon dinner-icon" aria-hidden="true">☾</span>
+                            <div class="phone-meal-copy">
+                                <span class="phone-meal-type">DINNER</span>
+                                <strong>A feel-good evening plate</strong>
+                                <small>Easy meal inspiration for your routine</small>
+                                <span class="phone-nutrition">Balanced · Satisfying · Yours</span>
+                            </div>
+                            <span class="phone-meal-arrow" aria-hidden="true">›</span>
+                        </article>
+                        <div class="phone-progress">
+                            <span>Small steps add up</span>
+                            <span class="progress-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                        </div>
+                    </div>
+                    <div class="showcase-caption"><span aria-hidden="true">✦</span> A plan that starts with you</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="landing-how">
+            <div class="landing-how-heading">
+                <span>HOW IT WORKS</span>
+                <h2>Your path to a more <em>balanced week</em></h2>
+                <p>Simple tools to help you make informed choices, one day at a time.</p>
+            </div>
+            <div class="landing-steps">
+                <article class="landing-step">
+                    <span class="landing-step-number">01</span>
+                    <span class="landing-step-icon" aria-hidden="true">♙</span>
+                    <h3>Create your account</h3>
+                    <p>Register or log in to open your personal planner.</p>
+                </article>
+                <article class="landing-step">
+                    <span class="landing-step-number">02</span>
+                    <span class="landing-step-icon" aria-hidden="true">⌁</span>
+                    <h3>Set your targets</h3>
+                    <p>Share your details, activity level, and wellness goal.</p>
+                </article>
+                <article class="landing-step">
+                    <span class="landing-step-number">03</span>
+                    <span class="landing-step-icon" aria-hidden="true">✳</span>
+                    <h3>Explore your meal plan</h3>
+                    <p>View seven days of meal ideas tailored to your preferences.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <span>❧ Wellness Kitchen</span>
+        <p>© 2026 AI Diet Planner <i>·</i> Eat well, live well.</p>
+    </footer>
+</body>
+
+</html>
